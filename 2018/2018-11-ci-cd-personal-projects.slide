@@ -1,0 +1,35 @@
+CI/CD for Personal Projects
+Say "NO!" to Git hooks
+26 Nov 2018
+
+Tiago "Myhro" Ilieve
+DevOps Engineer, Zalando SE
+https://blog.myhro.info/
+@myhro
+
+* Purposes
+
+CI/CD platforms solves a few software development problems like:
+
+- Reproducibility
+- Automation of repeated tasks: tests, linter, etc.
+- Observability
+
+* Entry barriers
+
+The effort involved in adding/maintaining a CI/CD to a project should be as closest to zero as possible:
+
+- Easy configuration
+- Shouldn't be a blocker
+- Should be cheap
+
+* Common patterns
+
+It's up to the project owner to choose often the CI/CD checks are executed. Common patterns are:
+
+- On PR creation
+- Pushes to a branch that is related to a PR
+- Merges to master
+- Pushes to any branches
+
+* Demo
