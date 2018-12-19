@@ -1,0 +1,45 @@
+Networking 101
+Computer networking basics for IT professionals
+19 Dec 2018
+
+Tiago "Myhro" Ilieve
+DevOps Engineer, Zalando SE
+https://blog.myhro.info/
+@myhro
+
+* OSI Model
+
+1. Physical layer (Modem/DSL, Wi-Fi, Hubs)
+2. Data link layer (Ethernet, PPP, Switches)
+3. Network layer (IP, ICMP)
+4. Transport layer (TCP, UDP)
+5 and 6. Nobody cares
+7. Application layer (HTTP)
+
+* Deeper look at transport protocols
+
+- Ports
+- Headers
+- TCP vs. UDP:
+  * Reliability
+  * Connections
+  * Sequencing
+  * ACKs
+  * Retransmissions
+- TCP-over-TCP (and more)
+
+* Debugging
+
+- Basic connectivity (caveat lector!): `ping`
+- Routes: `route` (net-tools), `ip` (iproute2)
+- Routing: `traceroute`, `mtr`
+- DNS: `dig`
+- TCP/UDP: `nc`
+- HTTP: `curl`
+- Sockets: `netstat` (net-tools), `ss` (iproute2)
+- Bandwidth: `iperf`
+- Traffic: `tcpdump`
+
+* Further reading
+
+Julia Evans - Networking! ACK!: [[https://wizardzines.com/zines/networking/]]
