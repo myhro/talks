@@ -1,0 +1,89 @@
+Python Call Stack
+Why function calls aren't free
+04 Jan 2019
+
+Tiago "Myhro" Ilieve
+DevOps Engineer, Zalando SE
+https://blog.myhro.info/
+@myhro
+
+* Python memory management
+
+- Call stack (a.k.a. execution stack, run-time stack, etc.)
+- Heap
+- Varies per implementation, consider CPython 3.6.
+
+
+* Stack frames
+
+Also known as "activation records" or "activation frames", (basically) composed of:
+
+- Built-in symbol table
+- Global symbol table
+- Local symbol table
+- Code segment
+- Execution flag
+- Line number (if tracing is active)
+- Stack of local variables
+
+
+* PyFrameObject
+
+[[https://github.com/python/cpython/blob/v3.6.8/Include/frameobject.h#L17-L53][Include/frameobject.h]], lines 17 to 53:
+
+- 1x `PyFrameObject` pointer to the previous frame
+- 1x `PyCodeObject` pointer
+- 1x `PyTryBlock` (3x `int`)
+- 11x `PyObject` pointers (and pointers to pointers)
+- 1x `char`
+- 3x `int`
+
+Total: 129 bytes (on x86_64)
+
+
+* Factorial example
+
+Loop:
+
+  def factorial(n):
+      r = 1
+      while n > 0:
+          r *= n
+          n -= 1
+      return r
+
+Recursion:
+
+  def rec_factorial(n):
+      if n == 1:
+          return 1
+      return n * rec_factorial(n - 1)
+
+
+* Benchmark
+
+Measured using IPython's `%timeit` built-in magic command:
+
+  In [1]: %timeit factorial(5)
+  485 ns ± 1.85 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+
+  In [2]: %timeit rec_factorial(5)
+  704 ns ± 2.49 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+
+  In [3]: %timeit factorial(10)
+  902 ns ± 27.6 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+
+  In [4]: %timeit rec_factorial(10)
+  1.41 µs ± 6.95 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+
+  In [5]: %timeit factorial(100)
+  10.4 µs ± 96 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+
+  In [6]: %timeit rec_factorial(100)
+  15.9 µs ± 276 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+
+
+* References
+
+[[https://docs.python.org/3.6/c-api/memory.html][Python/C API Reference Manual - Memory Management]]
+[[http://l4wisdom.com/python/python_memory.php][Python memory management - The Run-time stack and the Heap]]
