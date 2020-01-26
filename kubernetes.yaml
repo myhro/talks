@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: talks
+spec:
+  selector:
+    matchLabels:
+      app: talks
+  template:
+    metadata:
+      labels:
+        app: talks
+    spec:
+      containers:
+        - name: talks
+          image: myhro/talks:IMAGE_VERSION
+          ports:
+            - containerPort: 3999
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: talks
+spec:
+  selector:
+    app: talks
+  ports:
+    - port: 3999
+      targetPort: 3999
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: talks
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: talks.myhro.info
+      http:
+        paths:
+          - backend:
+              serviceName: talks
+              servicePort: 3999
+  tls:
+    - hosts:
+        - talks.myhro.info
+      secretName: talks-tls

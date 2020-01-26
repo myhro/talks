@@ -15,8 +15,9 @@ Run web server:
 
 ## Usage
 
-Talks can be easily rendered in the [talks.godoc.org][talks] website.
+Talks can be accessed at [talks.myhro.info][talks] or rendered in the [talks.godoc.org][talks-godoc] website.
 
 
 [present]: https://godoc.org/golang.org/x/tools/present
-[talks]: https://talks.godoc.org/
+[talks-godoc]: https://talks.godoc.org/
+[talks]: https://talks.myhro.info/
