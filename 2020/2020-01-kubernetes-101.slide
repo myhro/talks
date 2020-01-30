@@ -1,0 +1,44 @@
+Kubernetes 101
+Flexible infrastructure for developers in dire need
+30 Jan 2020
+
+Tiago "Myhro" Ilieve
+Software Engineer, Toggl
+https://blog.myhro.info/
+@myhro
+
+* Background
+
+Docker experience:
+
+- For fun, since 2013.
+- For profit, since 2014.
+
+Kubernetes experience:
+
+- For fun, since 2017.
+- For profit, since 2018.
+
+* Objects
+
+- Pod
+- Deployment
+- Service
+- Ingress
+- [[https://kubernetes.io/docs/concepts/#kubernetes-objects][Many others not mentioned here]]
+
+* Architecture: 10.000 foot view
+
+.image kubernetes.png 475 _
+
+Image: [[https://www.docker.com/blog/designing-your-first-application-kubernetes-communication-services-part3/][Docker, Inc.]]
+
+* Demo
+
+Guestbook
+
+* Bonus
+
+Instant [[https://learnk8s.io/kubernetes-rollbacks][rollbacks]]:
+
+    kubectl rollout undo deployment/<name>
