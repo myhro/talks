@@ -2,16 +2,7 @@
 name: Docker
 "on": [push]
 jobs:
-  build:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v1
-      - name: Build
-        run: |
-          make build
-  push:
-    if: github.ref == 'refs/heads/master'
-    needs: build
+  image:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
@@ -25,7 +16,7 @@ jobs:
           make push
   deploy:
     if: github.ref == 'refs/heads/master'
-    needs: push
+    needs: image
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
