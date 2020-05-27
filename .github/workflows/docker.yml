@@ -14,7 +14,22 @@ jobs:
         run: |
           make build
           make push
-  deploy:
+  deploy-staging:
+    needs: image
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Credentials
+        env:
+          KUBECTL_CFG: ${{ secrets.KUBECTL_CFG }}
+        run: |
+          mkdir -p $HOME/.kube
+          echo "$KUBECTL_CFG" > $HOME/.kube/config
+          kubectl version
+      - name: Deploy
+        run: |
+          make deploy
+  deploy-prod:
     if: github.ref == 'refs/heads/master'
     needs: image
     runs-on: ubuntu-18.04
@@ -22,6 +37,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Credentials
         env:
+          ENV: prod
+          HOST: talks.myhro.info
           KUBECTL_CFG: ${{ secrets.KUBECTL_CFG }}
         run: |
           mkdir -p $HOME/.kube

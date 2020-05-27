@@ -1,12 +1,18 @@
-IMAGE = myhro/talks
+DEPLOY_FILE := deploy-k8s.yaml
+ENV ?= staging
+HOST ?= talks.myhro.net
+IMAGE := myhro/talks
 VERSION := $(shell git rev-parse --short HEAD)
 
 build:
 	docker build -t $(IMAGE) .
 
+clean:
+	rm -f $(DEPLOY_FILE)
+
 deploy:
-	sed -i 's/IMAGE_VERSION/$(VERSION)/' kubernetes.yaml
-	kubectl apply -f kubernetes.yaml
+	sed 's/<ENV>/$(ENV)/;s/<HOST>/$(HOST)/;s/<VERSION>/$(VERSION)/' kubernetes.yaml > $(DEPLOY_FILE)
+	kubectl apply -f $(DEPLOY_FILE)
 
 deps:
 	go get -u golang.org/x/tools/cmd/present
