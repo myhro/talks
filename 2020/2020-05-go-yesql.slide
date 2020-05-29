@@ -1,0 +1,75 @@
+Go + Yesql
+Treat SQL as code
+29 May 2020
+
+Tiago "Myhro" Ilieve
+Software Engineer, Toggl
+https://blog.myhro.info/
+@myhro
+
+* Origins: Yesql
+
+[[https://github.com/krisajenkins/yesql][Yesql]] is a Clojure library. It was created to avoid:
+
+- Embedded SQL queries:
+
+  (query "SELECT * FROM users WHERE country_code = ?" "GB")
+
+- ORM constructions:
+
+  (select :*
+    (from :users)
+    (where (= :country_code "GB")))
+
+*Disadvantages*:
+
+- Embedded: hard to read and rewrite
+- ORM: easily gets too complex for non-basic queries
+
+* Yesql: SQL split from code
+
+- `users.sql`
+
+  -- name: users-by-country
+  SELECT *
+    FROM users
+    WHERE country_code = :country_code
+
+- `main.clj`
+
+  (defqueries "users.sql" {:connection db-spec})
+  (users-by-country {:country_code "GB"})
+
+*Advantages*:
+
+- SQL as a real programming language: syntax highlighting, easy indentation, etc.
+- Reuse: copy/paste from editor to SQL client, can be shared between projects, etc.
+- Spread responsibilities: non-developers (e.g. DBAs) can write/tune plain SQL
+- Can also be used to separate database tests from application tests
+
+* Go + Yesql
+
+There's a Go port of Yeqsl: [[https://github.com/nleof/goyesql][github.com/nleof/goyesql]]
+
+- `users.sql` - Positional arguments are used:
+
+  -- name: users-by-country
+  SELECT *
+    FROM users
+    WHERE country_code = $1
+
+- `main.go` - Queries are mapped to a `map[string]string`:
+
+	queries, err := goyesql.ParseFile("users.sql")
+	if err != nil {
+		(...)
+	}
+
+	rows, err = db.Query(queries["users-by-country"], countryCode)
+	if err != nil {
+		(...)
+	}
+
+* Demo
+
+Storing email + password
