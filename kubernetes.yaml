@@ -29,21 +29,37 @@ spec:
     - port: 3999
       targetPort: 3999
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: talks-<ENV>
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: talks-<ENV>-tunnel
 spec:
-  rules:
-    - host: <HOST>
-      http:
-        paths:
-          - backend:
-              serviceName: talks-<ENV>
-              servicePort: 3999
-  tls:
-    - hosts:
-        - <HOST>
-      secretName: talks-<ENV>-tls
+  selector:
+    matchLabels:
+      app: talks-<ENV>-tunnel
+  serviceName: talks-<ENV>-tunnel
+  template:
+    metadata:
+      labels:
+        app: talks-<ENV>-tunnel
+    spec:
+      containers:
+        - name: cloudflared
+          image: cloudflare/cloudflared:2020.10.0
+          command:
+            - cloudflared
+            - tunnel
+            - run
+            - <TUNNEL>
+          env:
+            - name: NO_AUTOUPDATE
+              value: "true"
+            - name: TUNNEL_URL
+              value: http://talks-<ENV>:3999
+          volumeMounts:
+            - mountPath: /etc/cloudflared
+              name: cloudflared
+      volumes:
+        - name: cloudflared
+          secret:
+            secretName: talks-<ENV>-tunnel

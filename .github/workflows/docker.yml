@@ -45,6 +45,6 @@ jobs:
       - name: Deploy
         env:
           ENV: prod
-          HOST: talks.myhro.info
+          TUNNEL: 686d670a-dc27-4340-98b4-d52c1378b319
         run: |
           make deploy
