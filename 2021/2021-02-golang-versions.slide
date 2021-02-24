@@ -1,0 +1,48 @@
+Go Versions
+Keeping the compiler up-to-date
+25 Feb 2021
+
+Tiago "Myhro" Ilieve
+Software Engineer, Toggl
+https://blog.myhro.info/
+@myhro
+
+* Releases
+
+- [[https://golang.org/doc/devel/release.html][New major releases twice a year]], usually in February and August
+- 1.14 and 1.15 in 2020
+- 1.16 in 2021
+- Each release is upported until there are two new major releases
+- 1.5 was supported until 1.7
+- 1.6 was supported until 1.8
+- Minor releases once or twice a month
+
+* Why upgrade
+
+- It's not (just) about new features
+- Major versions also includes improved compilation/runtime performance
+- Minor versions includes both fixes and security fixes
+- [[https://golang.org/doc/go1compat][Go 1 promise of compatibility]]
+
+* Real-life example
+
+Went to a random project and ran:
+
+  $ git log -p .go-version
+
+- 1.10 -> 1.11 in Nov 2018
+- 1.11 -> 1.13 in Dec 2019
+- 1.13 -> 1.14 in Jun 2020
+- No minor upgrades between major ones
+
+* Automated upgrades
+
+Image: [[https://xkcd.com/1205/][xkcd: Is It Worth the Time?]]
+
+.image is_it_worth_the_time.png 475 _
+
+* Other upgrade strategies
+
+- Avoid `.0` releases?
+- Relaxing minor version pinning
+- Scheduled upgrades
