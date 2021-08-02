@@ -1,0 +1,51 @@
+Serverless Platform
+Path towards zero-maintenance infrastructure
+03 Aug 2021
+
+Tiago "Myhro" Ilieve
+Software Engineer, Toggl
+https://blog.myhro.info/
+@myhro
+
+* Platform
+
+- Isolated
+- Efficient
+- Easy to use
+- Zero-maintenance
+- Cheap
+
+* Services
+
+- Small
+- Self-contained
+- Do one thing and do it well
+- Preferably internal ones
+- Effort to deploy should be smaller than the effort to build it
+
+* Provider Platforms
+
+- AWS Lambda
+- Google Cloud Functions
+- Google Cloud Run
+- Cloudflare Workers
+
+* Cloudflare Workers
+
+- Probably the only truly serverless platform out there
+- If you have to think about datacenters or regions, it's not serverless
+- If you have to care about containers, it's not serverless
+- If you have to pre-define CPU or memory, it's not serverless
+- If you have to pre-allocate a datastore, it's not serverless
+- Experience is centered around writing code
+- Paradigm is so different that it wouldn't be a competitor to our current or future regular Cloud-based infrastructure
+
+* Demo: Static Page
+
+* Demo: Key-Value API
+
+* References
+
+[[https://blog.cloudflare.com/cloud-computing-without-containers/][Cloud Computing without Containers]]
+[[https://blog.myhro.info/2018/03/how-i-finally-migrated-my-whole-website-to-the-cloud][How I finally migrated my whole website to the cloud]]
+[[https://blog.cloudflare.com/just-write-code-improving-developer-experience-for-cloudflare-workers/][Just Write Code: Improving Developer Experience for Cloudflare Workers]]
