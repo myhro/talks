@@ -1,0 +1,67 @@
+# Go Concurrency Patterns
+Concurrency is hard, but Go makes it manageable
+05 Oct 2021
+
+Tiago "Myhro" Ilieve
+Software Engineer, Toggl
+https://blog.myhro.info/
+@myhro
+
+## Introduction
+
+> Concurrency is hard. It doesn't matter if you're a novice or an expert: even experts regularly get it wrong.
+
+> Kenton Varda - Protobuf/Cap'n Proto creator, Cloudflare Workers Tech Lead
+
+- Race conditions do happen and there are multiple ways to avoid them
+
+- In short: be humble, avoid locks
+
+## Channels
+
+- Based on communicating sequential processes (CSP) - Tony Hoare, 1978
+
+- Channels are thread-safe - sometimes that's not obvious - but they do block
+
+- Unbuffered channel:
+
+.image channel-unbuffered.png _ 450
+
+## Channels (cont.)
+
+- Buffered channel:
+
+.image channel-buffered.png
+
+- Avoid blocking with the `select` statement, which is like `switch`/`case`, but for channels
+
+## Synchronization Packages
+
+`sync`
+
+- `Once`
+- `Map`
+- Avoid `WaitGroup` if possible. It blocks and can cause deadlocks
+
+`sync/atomic`
+
+- Uses thread-safe lock-free CPU instructions under the hood
+- Limited to integers and pointers
+- `Value`
+
+## Conclusion
+
+- Avoid double-initialization issues with `sync.Once`
+- Try to use channels, avoid shared state
+  - "Share memory by communicating; don't communicate by sharing memory"
+- Avoid channel blocking with `select`
+- Try higher-level options like `sync.Map`
+- Try lock-free solutions with `atomic.Value`
+- Only use locks/mutexes if, and only if, none of the above worked
+
+## References
+
+1. [Cloudflare Blog - Durable Objects: Easy, Fast, Correct - Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+2. [Go by Example: Non-Blocking Channel Operations](https://gobyexample.com/non-blocking-channel-operations)
+3. [Golang UK Conference 2017 | Arne Claus - Concurrency Patterns in Go](https://www.youtube.com/watch?v=rDRa23k70CU)
+4. [Stack Overflow - What are channels used for?](https://stackoverflow.com/questions/39826692/what-are-channels-used-for)
