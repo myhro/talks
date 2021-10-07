@@ -34,6 +34,7 @@ https://blog.myhro.info/
 .image channel-buffered.png
 
 - Avoid blocking with the `select` statement, which is like `switch`/`case`, but for channels
+- Timeouts can be handled with `time.After()` and cancellation with `ctx.Done()`
 
 ## Synchronization Packages
 
@@ -42,6 +43,7 @@ https://blog.myhro.info/
 - `Once`
 - `Map`
 - Avoid `WaitGroup` if possible. It blocks and can cause deadlocks
+  - A massive amount of goroutines can also be a performance bottleneck
 
 `sync/atomic`
 
