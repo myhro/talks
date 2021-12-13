@@ -33,6 +33,7 @@ async function handleEvent(event) {
    * by configuring the function `mapRequestToAsset`
    */
   // options.mapRequestToAsset = handlePrefix(/^\/docs/)
+  options.mapRequestToAsset = handleSuffix()
 
   try {
     if (DEBUG) {
@@ -88,5 +89,17 @@ function handlePrefix(prefix) {
 
     // inherit all other props from the default request
     return new Request(url.toString(), defaultAssetKey)
+  }
+}
+
+function handleSuffix() {
+  return request => {
+    let url = new URL(request.url);
+    const isYear = /^\/\d{4}$/.test(url.pathname);
+    const isSlide = url.pathname.endsWith('.slide');
+    if (isYear || isSlide) {
+      url.pathname += '.html';
+    }
+    return mapRequestToAsset(new Request(url, request));
   }
 }
