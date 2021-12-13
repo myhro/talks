@@ -1,3 +1,4 @@
+ENV ?= staging
 PRESENT_CMD = $(GOBIN)/present -base $(GOPATH)/pkg/mod/golang.org/x/tools@$(PRESENT_VERSION)/cmd/present -content slides/ -use_playground
 PRESENT_VERSION = v0.1.8
 URL = 127.0.0.1:3999
@@ -12,6 +13,9 @@ deps:
 # https://github.com/golang/go/issues/43459#issuecomment-800654748
 	go install golang.org/x/tools/cmd/present@$(PRESENT_VERSION)
 	go get -d golang.org/x/tools/cmd/present@$(PRESENT_VERSION)
+
+deploy:
+	npx wrangler publish --env $(ENV)
 
 dev:
 	npx wrangler dev
