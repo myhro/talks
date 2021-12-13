@@ -5,7 +5,7 @@ URL = 127.0.0.1:3999
 build: clean serve-background mirror stop
 
 clean:
-	rm -rf $(URL)/
+	rm -rf dist/
 
 deps:
 # Downloading the binary isn't enough on Go >= 1.16, the source is needed as well
@@ -13,9 +13,13 @@ deps:
 	go install golang.org/x/tools/cmd/present@$(PRESENT_VERSION)
 	go get -d golang.org/x/tools/cmd/present@$(PRESENT_VERSION)
 
+dev:
+	npx wrangler dev
+
 mirror:
 	wget --mirror --adjust-extension $(URL)
 	wget -O $(URL)/static/styles.css $(URL)/static/styles.css
+	mv $(URL)/ dist/
 
 serve:
 	$(PRESENT_CMD)
