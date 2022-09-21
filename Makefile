@@ -11,12 +11,13 @@ deps:
 	go install golang.org/x/tools/cmd/present@$(PRESENT_VERSION)
 
 dev:
-	npx wrangler dev
+	BROWSER=none npx wrangler pages dev dist/
 
 mirror:
 	wget --mirror --adjust-extension $(URL)
 	wget -O $(URL)/static/styles.css $(URL)/static/styles.css
 	mv $(URL)/ dist/
+	echo "<h1>Not Found</h1>" > dist/404.html
 
 serve:
 	$(PRESENT_CMD)
