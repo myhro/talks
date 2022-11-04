@@ -1,5 +1,5 @@
 PRESENT_CMD = $(GOBIN)/present -base $(GOPATH)/pkg/mod/golang.org/x/tools@$(PRESENT_VERSION)/cmd/present -content slides/ -use_playground
-PRESENT_VERSION = v0.1.12
+PRESENT_VERSION = v0.2.0
 URL = 127.0.0.1:3999
 
 build: clean serve-background mirror stop
