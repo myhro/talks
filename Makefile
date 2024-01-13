@@ -1,5 +1,5 @@
-PRESENT_CMD = $(GOBIN)/present -base $(GOPATH)/pkg/mod/golang.org/x/tools@$(PRESENT_VERSION)/cmd/present -content slides/ -use_playground
-PRESENT_VERSION = v0.2.0
+GOBIN ?= $(shell go env GOPATH)/bin
+PRESENT_CMD = $(GOBIN)/present -content slides/ -use_playground
 URL = 127.0.0.1:3999
 
 build: clean serve-background mirror stop
@@ -8,7 +8,7 @@ clean:
 	rm -rf dist/
 
 deps:
-	go install golang.org/x/tools/cmd/present@$(PRESENT_VERSION)
+	go install golang.org/x/tools/cmd/present@v0.17.0
 
 dev:
 	BROWSER=none npx wrangler pages dev dist/
