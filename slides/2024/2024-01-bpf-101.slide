@@ -1,0 +1,74 @@
+# BPF 101
+Getting Linux superpowers
+09 Feb 2024
+
+Tiago "Myhro" Ilieve
+Systems/Software Engineer
+https://blog.myhro.info/
+@myhro
+
+## History
+
+- 1993: Berkeley Packet Filter (before FreeBSD)
+- 1997: Added to the Linux kernel
+- 2014: eBPF merged, released on Linux kernel 3.18
+  - Syscall
+  - Maps
+  - Verifier
+
+## Naming
+
+- Classic BPF
+- eBPF
+- BPF
+  - `bpf()` syscall
+  - `bpf_*` functions
+  - `BPF_MAP_*`, `BPF_PROG_*` constants/opcodes
+
+## Kernel space vs. User space
+
+.image bpf-01-kernel-user-space.png 475 _
+
+Image: [Learning eBPF](https://www.oreilly.com/library/view/learning-ebpf/9781098135119/)
+
+## What it is
+
+- Equivalent to JavaScript in the Linux kernel
+  - Event-based invocation
+- Kernel code:
+  - Patches
+  - Modules
+  - BPF
+
+## How to use it
+
+- BCC tools
+- bpftrace
+- libbpf
+  - BTF
+  - CO-RE
+
+## Network stack
+
+.image bpf-02-network-layers.png 300 _
+
+.image bpf-03-network-headers.png _ 500
+
+Images: [Learning eBPF](https://www.oreilly.com/library/view/learning-ebpf/9781098135119/)
+
+## Demo
+
+- Linux kernel firewall in ~100 lines of C
+  - [github.com/myhro/bpfirewall](https://github.com/myhro/bpfirewall)
+
+## Conclusion
+
+- Platform, not a feature
+- BPF... On Windows?
+
+## Further reading
+
+- [Andrii Nakryiko's Blog](https://nakryiko.com/)
+- [Brendan Gregg's Blog](https://www.brendangregg.com/blog/)
+- Brendan Gregg's [BPF Performance Tools](https://www.oreilly.com/library/view/bpf-performance-tools/9780136588870/)
+- Liz Rice's [Learning eBPF](https://www.oreilly.com/library/view/learning-ebpf/9781098135119/)
