@@ -1,0 +1,25 @@
+---
+name: Deploy
+on:
+  - push
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.21
+      - name: Dependencies
+        run: |
+          make present
+          npm ci
+      - name: Build
+        run: |
+          make build
+      - name: Deploy
+        env:
+          BRANCH: ${{ github.REF_NAME }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          make deploy

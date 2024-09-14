@@ -7,7 +7,7 @@ Repository of talks written in [Go present][present] format.
 
 Install dependencies:
 
-    make deps
+    make present
 
 Run web server:
 

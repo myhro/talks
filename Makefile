@@ -1,3 +1,5 @@
+BRANCH ?= staging
+DIST_FOLDER = dist
 GOBIN ?= $(shell go env GOPATH)/bin
 PRESENT_CMD = $(GOBIN)/present -content slides/ -use_playground
 URL = 127.0.0.1:3999
@@ -5,19 +7,19 @@ URL = 127.0.0.1:3999
 build: clean serve-background mirror stop
 
 clean:
-	rm -rf dist/
+	rm -rf $(DIST_FOLDER)/
 
-deps:
-	go install golang.org/x/tools/cmd/present@v0.17.0
-
-dev:
-	BROWSER=none npx wrangler pages dev dist/
+deploy:
+	npx wrangler pages deploy --branch $(BRANCH) --project-name myhro-talks $(DIST_FOLDER)/
 
 mirror:
 	wget --mirror --adjust-extension $(URL)
 	wget -O $(URL)/static/styles.css $(URL)/static/styles.css
-	mv $(URL)/ dist/
-	echo "<h1>Not Found</h1>" > dist/404.html
+	mv $(URL)/ $(DIST_FOLDER)/
+	echo "<h1>Not Found</h1>" > $(DIST_FOLDER)/404.html
+
+present:
+	go install golang.org/x/tools/cmd/present@v0.17.0
 
 serve:
 	$(PRESENT_CMD)
