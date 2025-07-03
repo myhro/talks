@@ -1,6 +1,11 @@
 BRANCH ?= staging
 DIST_FOLDER = dist
+
 GOBIN ?= $(shell go env GOBIN)
+ifeq ($(GOBIN),)
+	GOBIN = $(shell go env GOPATH)/bin
+endif
+
 PRESENT_CMD = $(GOBIN)/present -content slides/ -use_playground
 URL = 127.0.0.1:3999
 
