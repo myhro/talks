@@ -1,4 +1,3 @@
-BRANCH ?= staging
 DIST_FOLDER = dist
 
 GOBIN ?= $(shell go env GOBIN)
@@ -14,8 +13,8 @@ build: clean serve-background mirror stop
 clean:
 	rm -rf $(DIST_FOLDER)/
 
-deploy:
-	npx wrangler pages deploy --branch $(BRANCH) --project-name myhro-talks $(DIST_FOLDER)/
+deploy: build
+	npx wrangler deploy
 
 mirror:
 	wget --mirror --adjust-extension $(URL)
@@ -32,6 +31,9 @@ serve:
 serve-background:
 	$(PRESENT_CMD) &
 	timeout 10s bash -c 'until curl -I $(URL); do sleep 0.5; done'
+
+staging: build
+	npx wrangler versions upload --preview-alias staging
 
 stop:
 	pkill present
